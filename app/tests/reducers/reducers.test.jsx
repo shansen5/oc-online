@@ -53,6 +53,20 @@ describe( 'Reducers', () => {
             expect( response.length ).toBe( 1 );
             expect( response[0].text ).toBe( action.text );
         })
+        it( 'should add existing todos', () => {
+            var action = {
+                type: 'ADD_TODOS',
+                todos: todoData
+            }
+            var state = {
+                showCompleted: false,
+                searchText: '',
+                todos: []
+            }
+            var response = reducers.todoReducer( df( state ), df( action ));
+            expect( response.length ).toBe( 2 );
+            expect( response[0] ).toBe( todoData[0] );
+        })
         it( 'should toggle the todo completed state from false to true', () => {
             var action = {
                 type: 'TOGGLE_TODO',
