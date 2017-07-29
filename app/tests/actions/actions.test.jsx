@@ -1,6 +1,9 @@
 var expect = require( 'expect' );
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import moment from 'moment';
+
+import firebase, { firebaseRef } from 'app/firebase/';
 
 var actions = require( 'actions' );
 
@@ -70,11 +73,50 @@ describe( 'Actions', () => {
     })
 
     it( 'should generate an action to toggle the todo', () => {
-        var action = {
-            type: 'TOGGLE_TODO',
-            id: 4
+        var updates = {
+            completed: true,
+            completedAt: moment().unix()
         }
-        var response = actions.toggleTodo( action.id );
+        var action = {
+            type: 'UPDATE_TODO',
+            id: 4,
+            updates
+        }
+        var response = actions.updateTodo( action.id, action.updates );
         expect( response ).toEqual( action );
+    })
+
+    describe( 'Tests with firebase todos', () => {
+        var testTodoRef;
+
+        beforeEach( ( done ) => {
+            testTodoRef = firebaseRef.child( 'todos' ).push();
+            testTodoRef.set( {
+                text: 'Something to do',
+                completed: false,
+                createdAt: 12345
+            }).then( () => done() );
+        })
+
+        afterEach( ( done ) => {
+            testTodoRef.remove().then( () => done() );
+        })
+
+        it( 'should toggle todo and dispatch UPDATE_TODO action', ( done ) => {
+            const store = createMockStore( {} );
+            const action = actions.startToggleTodo( testTodoRef.key, true );
+            store.dispatch( action ).then( () => {
+                const mockActions = store.getActions();
+                expect( mockActions[0] ).toInclude( {
+                    type: 'UPDATE_TODO',
+                    id: testTodoRef.key,
+                });
+                expect( mockActions[0].updates ).toInclude( {
+                    completed: true
+                });
+                expect( mockActions[0].updates.completedAt ).toExist();
+                done();
+            }, done );
+        })
     })
 })

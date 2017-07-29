@@ -2,6 +2,8 @@ var expect = require( 'expect' );
 var df = require( 'deep-freeze-strict' );
 var reducers = require( 'reducers' );
 
+import moment from 'moment';
+
 describe( 'Reducers', () => {
     describe( 'searchTextReducer', () => {
         it( 'should set searchText', () => {
@@ -73,25 +75,39 @@ describe( 'Reducers', () => {
             expect( response[0] ).toBe( todoData[0] );
         })
         it( 'should toggle the todo completed state from false to true', () => {
+            var updates = {
+                completed: true,
+                completedAt: moment().unix()
+            }
             var action = {
-                type: 'TOGGLE_TODO',
-                id: 2
+                type: 'UPDATE_TODO',
+                id: 2,
+                updates
             }
             var response = reducers.todoReducer( df( todoData ), df( action ) );
             console.log( response );
             expect( response[0].completed ).toBe( true );
             expect( response[1].completed ).toBe( true );
             expect( response[1].completedAt ).toBeA( 'number' );
+            expect( response[0].text ).toEqual( todoData[0].text );
+            expect( response[1].text ).toEqual( todoData[1].text );
         })
         it( 'should toggle the todo completed state from true to false', () => {
+            var updates = {
+                completed: false,
+                completedAt: null
+            }
             var action = {
-                type: 'TOGGLE_TODO',
-                id: 11
+                type: 'UPDATE_TODO',
+                id: 11,
+                updates
             }
             var response = reducers.todoReducer( df( todoData ), df( action ) );
             console.log( response );
             expect( response[0].completed ).toBe( false );
             expect( response[1].completed ).toBe( false );
+            expect( response[0].text ).toEqual( todoData[0].text );
+            expect( response[1].text ).toEqual( todoData[1].text );
         })
     })
 })
