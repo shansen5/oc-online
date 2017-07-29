@@ -42,7 +42,12 @@ describe( 'Reducers', () => {
         it( 'should add the todo', () => {
             var action = {
                 type: 'ADD_TODO',
-                text: 'Ride my bike'
+                todo: {
+                    id: 'abc123',
+                    text: 'Ride my bike',
+                    completed: false,
+                    createdAt: 1234567
+                }
             }
             var state = {
                 showCompleted: false,
@@ -51,7 +56,7 @@ describe( 'Reducers', () => {
             }
             var response = reducers.todoReducer( df( state ), df( action ));
             expect( response.length ).toBe( 1 );
-            expect( response[0].text ).toBe( action.text );
+            expect( response[0] ).toEqual( action.todo );
         })
         it( 'should add existing todos', () => {
             var action = {
