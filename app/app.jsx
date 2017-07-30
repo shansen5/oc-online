@@ -8,18 +8,20 @@ var actions = require( 'actions' );
 var store = require( 'configureStore' ).configure();
 var TodoApi = require( 'TodoApi' );
 
-store.subscribe( () => {
-    var state = store.getState();
-    console.log( 'New State', state );
-    TodoApi.setTodos( state.todos );
-});
+// store.subscribe( () => {
+//     var state = store.getState();
+//     console.log( 'New State', state );
+//     TodoApi.setTodos( state.todos );
+// });
 
-var initialTodos = TodoApi.getTodos();
-store.dispatch( actions.addTodos( initialTodos ));
+// var initialTodos = TodoApi.getTodos();
+// store.dispatch( actions.addTodos( initialTodos ));
 
 // store.dispatch( actions.addTodo( 'Clean the yard' ));
 // store.dispatch( actions.setSearchText( 'yard' ));
 // store.dispatch( actions.toggleShowCompleted() );
+
+store.dispatch( actions.startAddTodos() );
 
 // Load foundation
 $(document).foundation();

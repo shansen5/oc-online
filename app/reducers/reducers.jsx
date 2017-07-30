@@ -27,6 +27,7 @@ export var todoReducer = ( state = [], action ) => {
                 action.todo
             ]
         case 'ADD_TODOS':
+            console.log( 'todoReducer: ', action.todos );
             return [
                 ...state,
                 ...action.todos

@@ -34,9 +34,31 @@ export var startAddTodo = ( text ) => {
 }
 
 export var addTodos = ( todos ) => {
+    console.log( 'addTodos:', todos );
     return {
         type: 'ADD_TODOS',
         todos
+    }
+}
+
+export var startAddTodos = () => {
+    return ( dispatch, getState ) => {
+        console.log( 'in startAddTodos()' );
+        var todoRef = firebaseRef.child( 'todos' ).once( 'value' ).then( (snapshot) => {
+            console.log( 'todoRef is', todoRef );
+            var todosObj = snapshot.val() || {};
+            var todos = [];
+            var ids = Object.keys( todos );
+            Object.keys( todosObj ).map( ( key ) => {
+                var todo = todosObj[key];
+                todo.id = key;
+                todos.push( todo );
+            });
+            console.log( 'Todos in startAddTodos:', todos );
+            var addTodosAction = addTodos( todos );
+            console.log( 'addTodosAction: ', addTodosAction );
+            dispatch( addTodosAction );
+        });
     }
 }
 
