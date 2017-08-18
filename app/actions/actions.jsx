@@ -57,7 +57,9 @@ export var startAddTodos = () => {
             console.log( 'Todos in startAddTodos:', todos );
             var addTodosAction = addTodos( todos );
             console.log( 'addTodosAction: ', addTodosAction );
-            dispatch( addTodosAction );
+            var dispatchAction = dispatch( addTodosAction );
+            console.log( 'dispatchAction:', dispatchAction );
+            return dispatchAction;
         });
     }
 }

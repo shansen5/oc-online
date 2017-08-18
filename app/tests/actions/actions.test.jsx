@@ -1,10 +1,9 @@
-var expect = require( 'expect' );
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moment from 'moment';
+var expect = require( 'expect' );
 
 import firebase, { firebaseRef } from 'app/firebase/';
-
 var actions = require( 'actions' );
 
 var createMockStore = configureMockStore( [thunk] );
@@ -112,7 +111,7 @@ describe( 'Actions', () => {
             const action = actions.startToggleTodo( testTodoRef.key, true );
             console.log( action );
             var promise = store.dispatch( action );
-            console.log( promise );
+            console.log( 'In should toggle todo, promise is: ', promise );
             promise.then( () => {
                 const mockActions = store.getActions();
                 expect( mockActions[0] ).toInclude( {
@@ -132,7 +131,7 @@ describe( 'Actions', () => {
             const action = actions.startAddTodos();
             console.log( action );
             var promise = store.dispatch( action );
-            console.log( 'In test, promise is: ', promise );
+            console.log( 'In should call startAddTodos, promise is: ', promise );
             promise.then( () => {
                 const mockActions = store.getActions();
                 expect( mockActions[0].type ).toEqual( 'ADD_TODOS' );
