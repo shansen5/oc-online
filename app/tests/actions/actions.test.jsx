@@ -109,7 +109,7 @@ describe( 'Actions', () => {
         it( 'should toggle todo and dispatch UPDATE_TODO action', ( done ) => {
             const store = createMockStore( {} );
             const action = actions.startToggleTodo( testTodoRef.key, true );
-            console.log( action );
+            console.log( 'In should toggle todo, action is: ', action );
             var promise = store.dispatch( action );
             console.log( 'In should toggle todo, promise is: ', promise );
             promise.then( () => {
@@ -129,7 +129,7 @@ describe( 'Actions', () => {
         it( 'should call startAddTodos action', ( done ) => {
             const store = createMockStore( {} );
             const action = actions.startAddTodos();
-            console.log( action );
+            console.log( 'In startAddTodos, action is: ', action );
             var promise = store.dispatch( action );
             console.log( 'In should call startAddTodos, promise is: ', promise );
             promise.then( () => {
