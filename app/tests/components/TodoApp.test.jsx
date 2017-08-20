@@ -7,7 +7,8 @@ var $ = require('jquery');
 
 var configureStore = require( 'configureStore' );
 import TodoList from 'TodoList'
-var TodoApp = require('TodoApp');
+// Use the unconnected version of TodoApp for testing.
+import {TodoApp} from 'TodoApp';
 
 describe('TodoApp', () => {
     it('should exist', () => {
