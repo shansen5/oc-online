@@ -92,9 +92,13 @@ export var startToggleTodo = ( id, completed ) => {
     }
 }
 
-export var startLogin = () => {
+export var startLogin = ( providerName ) => {
     return ( dispatch, getState ) => {
-        return firebase.auth().signInWithPopup( googleProvider ).then(() => {
+        var provider = githubProvider;
+        if ( providerName === 'google' ) {
+            provider = googleProvider;
+        }
+        return firebase.auth().signInWithPopup( provider ).then(( result ) => {
             // Success
             console.log( 'Auth worked', result );
         }, ( error ) => {
