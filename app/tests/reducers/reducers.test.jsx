@@ -5,6 +5,26 @@ var reducers = require( 'reducers' );
 import moment from 'moment';
 
 describe( 'Reducers', () => {
+    describe( 'authReducer', () => {
+        it( 'should login', () => {
+            var action = {
+                type: 'LOGIN',
+                uid: '12345'
+            }
+            var state = {};
+            var response = reducers.authReducer( df( state ), df( action ));
+            expect( response.uid ).toEqual( action.uid ); 
+        });        
+        it( 'should logout', () => {
+            var action = {
+                type: 'LOGOUT'
+            }
+            var state = {};
+            var response = reducers.authReducer( df( state ), df( action ));
+            expect( response.uid ).toNotExist();
+        });
+    });
+
     describe( 'searchTextReducer', () => {
         it( 'should set searchText', () => {
             var action = {

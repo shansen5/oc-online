@@ -27,7 +27,6 @@ export var todoReducer = ( state = [], action ) => {
                 action.todo
             ]
         case 'ADD_TODOS':
-            console.log( 'todoReducer: ', action.todos );
             return [
                 ...state,
                 ...action.todos
@@ -43,6 +42,19 @@ export var todoReducer = ( state = [], action ) => {
                     return todo;
                 }
             });
+        default:
+            return state;
+    }
+}
+
+export var authReducer = ( state = {}, action ) => {
+    switch( action.type ) {
+        case 'LOGIN':
+            return {
+                uid: action.uid
+            }
+        case 'LOGOUT':
+            return {}
         default:
             return state;
     }

@@ -23,7 +23,8 @@ export var startAddTodo = ( text ) => {
             createdAt: moment().unix(),
             completedAt: null
         };
-        var todoRef = firebaseRef.child( 'todos' ).push( todo );
+        var uid = getState().auth.uid;
+        var todoRef = firebaseRef.child( `users/${uid}/todos` ).push( todo );
         return todoRef.then( () => {
             dispatch( addTodo( {
                 ...todo,
@@ -43,24 +44,18 @@ export var addTodos = ( todos ) => {
 
 export var startAddTodos = () => {
     return ( dispatch, getState ) => {
-        console.log( 'in startAddTodos()' );
-        var todoRef = firebaseRef.child( 'todos' ).once( 'value' ).then( (snapshot) => {
-            console.log( 'todoRef is', todoRef );
-            var todosObj = snapshot.val() || {};
-            var todos = [];
-            var ids = Object.keys( todos );
-            Object.keys( todosObj ).map( ( key ) => {
-                var todo = todosObj[key];
-                todo.id = key;
-                todos.push( todo );
-            });
-            console.log( 'Todos in startAddTodos:', todos );
-            var addTodosAction = addTodos( todos );
-            console.log( 'addTodosAction: ', addTodosAction );
-            var dispatchAction = dispatch( addTodosAction );
-            console.log( 'dispatchAction:', dispatchAction );
-            return dispatchAction;
-        });
+        var uid = getState().auth.uid;
+        var todoRef = firebaseRef.child( `users/${uid}/todos` ).once( 'value' ).then(( snapshot ) => {
+            var todos = snapshot.val() || {};
+            var parsedTodos = [];
+            Object.keys( todos ).forEach(( todoId ) => {
+                parsedTodos.push({
+                    id:todoId,
+                    ...todos[ todoId ]
+                })
+            })
+            dispatch( addTodos( parsedTodos ));
+        })
     }
 }
 
@@ -80,7 +75,8 @@ export var updateTodo = ( id, updates ) => {
 
 export var startToggleTodo = ( id, completed ) => {
     return ( dispatch, getState ) => {
-        var todoRef = firebaseRef.child( `todos/${id}` );
+        var uid = getState().auth.uid;
+        var todoRef = firebaseRef.child( `users/${uid}/todos/${id}` );
         var updates = {
             completed,
             completedAt: completed ? moment().unix() : null
@@ -103,6 +99,7 @@ export var startLogin = ( providerName ) => {
             console.log( 'Auth worked', result );
         }, ( error ) => {
             // Error
+            window.alert( error );
             console.log( 'Unable to auth', error );
         })
     }
@@ -113,5 +110,18 @@ export var startLogout = () => {
         return firebase.auth().signOut().then (() => {
             console.log( 'Logged out' );
         })
+    }
+}
+
+export var login = ( uid ) => {
+    return {
+        type: 'LOGIN',
+        uid
+    }
+}
+
+export var logout = () => {
+    return {
+        type: 'LOGOUT'
     }
 }
