@@ -49,36 +49,6 @@ describe( 'Actions', () => {
         expect( response ).toEqual( action );
     })
 
-    it( 'should create todo and dispatch addTodo', ( done ) => {
-        const store = createMockStore( {} );
-        const todoText = 'Read a book';
-
-        store.dispatch( actions.startAddTodo( todoText )).then( () => {
-            const actions = store.getActions();
-            expect( actions[0] ).toInclude( {
-                type: 'ADD_TODO'
-            });
-            expect( actions[0].todo ).toInclude( {
-                text: todoText
-            });
-            done();
-        }).catch( done );
-    });
-
-    it ( 'should generate add todos action object', () => {
-        var todos = [{
-            id: '111',
-            text: 'anything',
-            completed: false,
-            completedAt: undefined,
-            createdAt: 33333
-        }];
-        var action = {
-            type: 'ADD_TODOS',
-            todos
-        }
-        var response = actions.addTodos( todos );
-        expect( response ).toEqual( action );
     })
     it( 'should generate a toggle show completed action', () => {
         var action = { 
@@ -104,18 +74,22 @@ describe( 'Actions', () => {
 
     describe( 'Tests with firebase todos', () => {
         var testTodoRef;
+        var uid;
+        var todosRef;
 
         beforeEach( ( done ) => {
-            var todosRef = firebaseRef.child( 'todos' );
-            todosRef.remove().then( () => {
-                testTodoRef = firebaseRef.child( 'todos' ).push();
+            firebase.auth().signInAnonymously().then( ( user ) => {
+                uid = user.uid;
+                todosRef = firebaseRef.child( `users/${uid}/todos` );
+                return todosRef.remove();
+            }).then( () => {
+                testTodoRef = todosRef.push();
                 testTodoRef.set( {
                     text: 'Something to do',
                     completed: false,
                     createdAt: 12345
-                })
-            })
-            .then( () => done() )
+                });
+            }).then( () => done() )
             .catch( done );
         })
 
@@ -124,7 +98,7 @@ describe( 'Actions', () => {
         })
 
         it( 'should toggle todo and dispatch UPDATE_TODO action', ( done ) => {
-            const store = createMockStore( {} );
+            const store = createMockStore( { auth: { uid }} );
             const action = actions.startToggleTodo( testTodoRef.key, true );
             console.log( 'In should toggle todo, action is: ', action );
             var promise = store.dispatch( action );
@@ -159,21 +133,36 @@ describe( 'Actions', () => {
             }, done );
         })
         */
-      it('should populate todos and dispatch ADD_TODOS', (done) => {
-      const store = createMockStore({});
-      const action = actions.startAddTodos();
+        it('should populate todos and dispatch ADD_TODOS', (done) => {
+            const store = createMockStore( { auth: { uid }} );
+            const action = actions.startAddTodos();
 
-      store.dispatch(action).then(() => {
-        const mockActions = store.getActions();
+            store.dispatch(action).then(() => {
+                const mockActions = store.getActions();
 
-        expect(mockActions[0].type).toEqual('ADD_TODOS');
-        expect(mockActions[0].todos.length).toEqual(1);
-        expect(mockActions[0].todos[0].text).toEqual('Something to do');
+                expect(mockActions[0].type).toEqual('ADD_TODOS');
+                expect(mockActions[0].todos.length).toEqual(1);
+                expect(mockActions[0].todos[0].text).toEqual('Something to do');
 
-        done();
-      }, done)
-    });
-  });
+                done();
+            }, done)
+        });
+
+        it ( 'should generate add todos action object', () => {
+            var todos = [{
+                id: '111',
+                text: 'anything',
+                completed: false,
+                completedAt: undefined,
+                createdAt: 33333
+            }];
+            var action = {
+                type: 'ADD_TODOS',
+                todos
+            }
+            var response = actions.addTodos( todos );
+            expect( response ).toEqual( action );
+        });
 
 
 })
