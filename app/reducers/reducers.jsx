@@ -42,6 +42,8 @@ export var todoReducer = ( state = [], action ) => {
                     return todo;
                 }
             });
+        case 'LOGOUT':
+            return [];
         default:
             return state;
     }

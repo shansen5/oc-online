@@ -35,7 +35,6 @@ export var startAddTodo = ( text ) => {
 }
 
 export var addTodos = ( todos ) => {
-    console.log( 'addTodos:', todos );
     return {
         type: 'ADD_TODOS',
         todos

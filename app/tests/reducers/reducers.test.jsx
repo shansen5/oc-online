@@ -122,12 +122,16 @@ describe( 'Reducers', () => {
                 id: 11,
                 updates
             }
-            var response = reducers.todoReducer( df( todoData ), df( action ) );
-            console.log( response );
+            var response = reducers.todoReducer( df( todoData ), df( action ));
             expect( response[0].completed ).toBe( false );
             expect( response[1].completed ).toBe( false );
             expect( response[0].text ).toEqual( todoData[0].text );
             expect( response[1].text ).toEqual( todoData[1].text );
+        })
+        it( 'should remove todos on logout', () => {
+            var action = { type: 'LOGOUT' }
+            var response = reducers.todoReducer( df( todoData ), df( action ));
+            expect( response ).toEqual( [] );
         })
     })
 })
