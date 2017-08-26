@@ -38,8 +38,10 @@ module.exports = {
                 return -1;
             } else if ( a.completed && !b.completed ) {
                 return 1;
+            } else if ( a.createdAt < b.createdAt ) {
+                return -1;
             } else {
-                return a.text ? ( b.text ? a.text.localeCompare( b.text ) : -1 ) : 1;
+                return 1;
             }
         });
         return filteredTodos;
