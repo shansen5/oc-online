@@ -1,4 +1,5 @@
-import firebase, { firebaseRef, githubProvider, googleProvider } from 'app/firebase/';
+import firebase, { firebaseRef, githubProvider, 
+    googleProvider, facebookProvider } from 'app/firebase/';
 import moment from 'moment';
 
 export var setSearchText = ( searchText ) => {
@@ -92,14 +93,20 @@ export var startLogin = ( providerName ) => {
         var provider = githubProvider;
         if ( providerName === 'google' ) {
             provider = googleProvider;
+        } else if ( providerName === 'facebook' ) {
+            provider = facebookProvider;
         }
         return firebase.auth().signInWithPopup( provider ).then(( result ) => {
             // Success
             console.log( 'Auth worked', result );
         }, ( error ) => {
-            // Error
-            window.alert( error );
-            console.log( 'Unable to auth', error );
+            if ( error.code === "auth/account-exists-with-different-credential" ) {
+                window.alert( "Another service is registered with this email address. Try again with that service." );
+            } else {
+                // Error
+                window.alert( error );
+                console.log( 'Unable to auth', error );
+            }
         })
     }
 }

@@ -3,12 +3,11 @@ import * as Redux from 'react-redux';
 
 import * as actions from 'actions';
 
-export var Login = React.createClass({
+export class Login extends React.Component {
     onLogin( provider ) {
         var { dispatch } = this.props;
-
-        dispatch( actions.startLogin( provider ) );
-    },
+        dispatch( actions.startLogin( provider ));
+    }
     render() {
         return (
             <div>
@@ -18,6 +17,8 @@ export var Login = React.createClass({
                     <div className="columns small-centered small-10 medium-6 large-4">
                         <div className="callout callout-auth">
                             <h3>Login</h3>
+                            <button className="button" onClick={ () => this.onLogin( 'facebook' ) }>Login with Facebook</button>
+                            <br/>
                             <button className="button" onClick={ () => this.onLogin( 'google' ) }>Login with Google</button>
                             <br/>
                             <button className="button" onClick={ () => this.onLogin( 'github' ) }>Login with GitHub</button>
@@ -27,6 +28,6 @@ export var Login = React.createClass({
             </div>
         )
     }
-});
+}
 
 export default Redux.connect()( Login );
