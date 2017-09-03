@@ -6,12 +6,19 @@ export class AddTodo extends React.Component {
     onFormSubmit( e ) {
         e.preventDefault();
         var { dispatch } = this.props;
-        var todoText = this.refs.todoText.value;
-        if ( todoText && todoText.trim().length > 0 ) {
-            this.refs.todoText.value = '';
-            dispatch( actions.startAddTodo( todoText ));
+        var giftAmount = this.refs.giftAmount.value;
+        var recipientName = this.refs.recipientName.value;
+        if ( recipientName && recipientName.trim().length > 0 ) {
+            this.refs.recipientName.value = '';
+            dispatch( actions.startAddTodo( recipientName ));
         } else {
-            this.refs.todoText.focus();
+            this.refs.recipientName.focus();
+        }
+        if ( giftAmount && giftAmount.trim().length > 0 ) {
+            this.refs.giftAmount.value = '';
+            dispatch( actions.startAddTodo( giftAmount ));
+        } else {
+            this.refs.giftAmount.focus();
         }
     }
     render() {
@@ -19,10 +26,11 @@ export class AddTodo extends React.Component {
             <div className="container__footer">
                 <form ref="form" onSubmit={ this.onFormSubmit.bind( this ) } className="addtodo">
                     <div>
-                        <input type="text" placeholder="Enter something you need to do" ref="todoText"/>
+                        <input type="text" placeholder="Enter the amount of the gift certificate" ref="giftAmount"/>
+                        <input type="text" placeholder="Recipient's name" ref="recipientName"/>
                     </div>
                     <div>
-                        <button className="button expanded">Add Todo</button>
+                        <button className="button expanded">Add Gift Certificate</button>
                     </div>
                 </form>
             </div>

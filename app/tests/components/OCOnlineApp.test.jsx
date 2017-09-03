@@ -7,24 +7,24 @@ var $ = require('jquery');
 
 var configureStore = require( 'configureStore' );
 import TodoList from 'TodoList'
-// Use the unconnected version of TodoApp for testing.
-import {TodoApp} from 'TodoApp';
+// Use the unconnected version of OCOnlineApp for testing.
+import {OCOnlineApp} from 'OCOnlineApp';
 
-describe('TodoApp', () => {
+describe('OCOnlineApp', () => {
     it('should exist', () => {
-        expect(TodoApp).toExist();
+        expect(OCOnlineApp).toExist();
     });
 
     it( 'should render TodoList', () => {
         var store = configureStore.configure();
         var provider = TestUtils.renderIntoDocument(
             <Provider store={store}>
-                <TodoApp/>
+                <OCOnlineApp/>
             </Provider>
         )
 
-        var todoApp = TestUtils.scryRenderedComponentsWithType( provider, TodoApp )[0];
-        var todoList = TestUtils.scryRenderedComponentsWithType( todoApp, TodoList );
+        var oconlineApp = TestUtils.scryRenderedComponentsWithType( provider, OCOnlineApp )[0];
+        var todoList = TestUtils.scryRenderedComponentsWithType( oconlineApp, TodoList );
         expect( todoList.length ).toBe( 1 );
     })
 });

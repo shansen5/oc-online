@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 
-import TodoApp from 'TodoApp';
+import OCOnlineApp from 'OCOnlineApp';
 import Login from 'Login';
 import firebase from 'app/firebase/';
 
@@ -23,7 +23,7 @@ export default (
     <Router history={hashHistory}>
         <Route path="/">>
             <IndexRoute component={ Login } onEnter={ redirectIfLoggedIn }/>
-            <Route path="todos" component={ TodoApp } onEnter = { requireLogin }/>
+            <Route path="todos" component={ OCOnlineApp } onEnter = { requireLogin }/>
         </Route>
     </Router>
 );

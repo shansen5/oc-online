@@ -1,12 +1,12 @@
 {
-  "name": "boilerplate",
+  "name": "oc-online",
   "version": "1.0.0",
   "description": "Simple react web server.",
   "main": "index.js",
   "scripts": {
     "start": "yarn run build && node server.js",
     "test": "NODE_ENV=test karma start",
-    "build": "webpack -p"
+    "build": "webpack"
   },
   "author": "Steve Hansen",
   "license": "MIT",
@@ -52,5 +52,5 @@
     "karma-webpack": "1.7.0",
     "mocha": "2.4.5"
   },
-  "repository": "git@github.com:shansen5/ReactTodo.git"
+  "repository": "git@github.com:shansen5/oc-online.git"
 }

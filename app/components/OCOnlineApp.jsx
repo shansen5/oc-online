@@ -6,7 +6,7 @@ import AddTodo from 'AddTodo';
 import TodoSearch from 'TodoSearch';
 import * as actions from 'actions';
 
-export class TodoApp extends React.Component {
+export class OCOnlineApp extends React.Component {
     onLogout( e ) {
         var { dispatch } = this.props;
         e.preventDefault();
@@ -18,7 +18,7 @@ export class TodoApp extends React.Component {
                 <div className="page-actions">
                     <a href="#" onClick = { this.onLogout.bind( this ) }>Logout</a>
                 </div>
-                <h1 className="page-title">Todo App</h1>
+                <h1 className="page-title">Oystercatcher Online Store</h1>
                 <div className="row">
                     <div className="column small-centered small-11 medium-6 large-5">
                         <div className="container">
@@ -33,4 +33,4 @@ export class TodoApp extends React.Component {
     }
 }
 
-export default Redux.connect()(TodoApp);
+export default Redux.connect()(OCOnlineApp);

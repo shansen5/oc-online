@@ -45,7 +45,8 @@ export var addTodos = ( todos ) => {
 export var startAddTodos = () => {
     return ( dispatch, getState ) => {
         var uid = getState().auth.uid;
-        var todoRef = firebaseRef.child( `users/${uid}/todos` ).once( 'value' ).then(( snapshot ) => {
+        var todosRef = firebaseRef.child( `users/${uid}/todos` );
+        return todosRef.once( 'value' ).then(( snapshot ) => {
             var todos = snapshot.val() || {};
             var parsedTodos = [];
             Object.keys( todos ).forEach(( todoId ) => {

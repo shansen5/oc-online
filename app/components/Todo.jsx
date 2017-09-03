@@ -18,7 +18,6 @@ export class Todo extends React.Component {
         return (
             <div className={ todoClassName } onClick={ this.onClick.bind( this ) }>
                 <div>
-                    // Provide an empty onChange function for a warning message.
                     <input type="checkbox" checked={completed} onChange={ () => {} }/>
                 </div>
                 <div>
