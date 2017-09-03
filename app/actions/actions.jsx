@@ -9,53 +9,53 @@ export var setSearchText = ( searchText ) => {
     }
 }
 
-export var addTodo = ( todo ) => {
+export var addOrder = ( order ) => {
     return {
-        type: 'ADD_TODO',
-        todo
+        type: 'ADD_ORDER',
+        order
     }
 }
 
-export var startAddTodo = ( text ) => {
+export var startAddOrder = ( text ) => {
     return ( dispatch, getState ) => {
-        var todo = {
+        var order = {
             text,
             completed: false,
             createdAt: moment().unix(),
             completedAt: null
         };
         var uid = getState().auth.uid;
-        var todoRef = firebaseRef.child( `users/${uid}/todos` ).push( todo );
-        return todoRef.then( () => {
-            dispatch( addTodo( {
-                ...todo,
-                id: todoRef.key
+        var orderRef = firebaseRef.child( `users/${uid}/orders` ).push( order );
+        return orderRef.then( () => {
+            dispatch( addOrder( {
+                ...order,
+                id: orderRef.key
             }));
         });
     };
 }
 
-export var addTodos = ( todos ) => {
+export var addOrders = ( orders ) => {
     return {
-        type: 'ADD_TODOS',
-        todos
+        type: 'ADD_ORDERS',
+        orders
     }
 }
 
-export var startAddTodos = () => {
+export var startAddOrders = () => {
     return ( dispatch, getState ) => {
         var uid = getState().auth.uid;
-        var todosRef = firebaseRef.child( `users/${uid}/todos` );
-        return todosRef.once( 'value' ).then(( snapshot ) => {
-            var todos = snapshot.val() || {};
-            var parsedTodos = [];
-            Object.keys( todos ).forEach(( todoId ) => {
-                parsedTodos.push({
-                    id:todoId,
-                    ...todos[ todoId ]
+        var ordersRef = firebaseRef.child( `users/${uid}/orders` );
+        return ordersRef.once( 'value' ).then(( snapshot ) => {
+            var orders = snapshot.val() || {};
+            var parsedOrders = [];
+            Object.keys( orders ).forEach(( orderId ) => {
+                parsedOrders.push({
+                    id:orderId,
+                    ...orders[ orderId ]
                 })
             })
-            dispatch( addTodos( parsedTodos ));
+            dispatch( addOrders( parsedOrders ));
         })
     }
 }
@@ -66,25 +66,25 @@ export var toggleShowCompleted = () => {
     }
 }
 
-export var updateTodo = ( id, updates ) => {
+export var updateOrder = ( id, updates ) => {
     return {
-        type: 'UPDATE_TODO',
+        type: 'UPDATE_ORDER',
         id,
         updates
     }
 }
 
-export var startToggleTodo = ( id, completed ) => {
+export var startToggleOrder = ( id, completed ) => {
     return ( dispatch, getState ) => {
         var uid = getState().auth.uid;
-        var todoRef = firebaseRef.child( `users/${uid}/todos/${id}` );
+        var orderRef = firebaseRef.child( `users/${uid}/orders/${id}` );
         var updates = {
             completed,
             completedAt: completed ? moment().unix() : null
         };
 
-        return todoRef.update( updates ).then( () => {
-            dispatch( updateTodo( id, updates ) );
+        return orderRef.update( updates ).then( () => {
+            dispatch( updateOrder( id, updates ) );
         })
     }
 }

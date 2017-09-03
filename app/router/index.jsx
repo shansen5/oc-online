@@ -14,7 +14,7 @@ var requireLogin = ( nextState, replace, next ) => {
 
 var redirectIfLoggedIn = ( nextState, replace, next ) => {
     if ( firebase.auth().currentUser ) {
-        replace( '/todos' );
+        replace( '/orders' );
     }
     next();
 }
@@ -23,8 +23,7 @@ export default (
     <Router history={hashHistory}>
         <Route path="/">>
             <IndexRoute component={ Login } onEnter={ redirectIfLoggedIn }/>
-            <Route path="todos" component={ OCOnlineApp } onEnter = { requireLogin }/>
+            <Route path="orders" component={ OCOnlineApp } onEnter = { requireLogin }/>
         </Route>
     </Router>
 );
-

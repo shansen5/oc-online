@@ -35,17 +35,17 @@ describe( 'Actions', () => {
         expect ( response ).toEqual( action );
     })
 
-    it( 'should generate add todo action', () => {
+    it( 'should generate add order action', () => {
         var action = {
-            type: 'ADD_TODO',
-            todo: {
+            type: 'ADD_ORDER',
+            order: {
                 id: 'abc123',
                 text: 'Something to do',
                 completed: false,
                 createdAt: 222222
             } 
         }
-        var response = actions.addTodo( action.todo );
+        var response = actions.addOrder( action.order );
         expect( response ).toEqual( action );
     })
 
@@ -58,33 +58,33 @@ describe( 'Actions', () => {
         expect( response ).toEqual( action );``
     })
 
-    it( 'should generate an action to toggle the todo', () => {
+    it( 'should generate an action to toggle the order', () => {
         var updates = {
             completed: true,
             completedAt: moment().unix()
         }
         var action = {
-            type: 'UPDATE_TODO',
+            type: 'UPDATE_ORDER',
             id: 4,
             updates
         }
-        var response = actions.updateTodo( action.id, action.updates );
+        var response = actions.updateOrder( action.id, action.updates );
         expect( response ).toEqual( action );
     })
 
-    describe( 'Tests with firebase todos', () => {
-        var testTodoRef;
+    describe( 'Tests with firebase orders', () => {
+        var testOrderRef;
         var uid;
-        var todosRef;
+        var ordersRef;
 
         beforeEach( ( done ) => {
             firebase.auth().signInAnonymously().then( ( user ) => {
                 uid = user.uid;
-                todosRef = firebaseRef.child( `users/${uid}/todos` );
-                return todosRef.remove();
+                ordersRef = firebaseRef.child( `users/${uid}/orders` );
+                return ordersRef.remove();
             }).then( () => {
-                testTodoRef = todosRef.push();
-                testTodoRef.set( {
+                testOrderRef = ordersRef.push();
+                testOrderRef.set( {
                     text: 'Something to do',
                     completed: false,
                     createdAt: 12345
@@ -94,20 +94,20 @@ describe( 'Actions', () => {
         })
 
         afterEach( ( done ) => {
-            testTodoRef.remove().then( () => done() );
+            testOrderRef.remove().then( () => done() );
         })
 
-        it( 'should toggle todo and dispatch UPDATE_TODO action', ( done ) => {
+        it( 'should toggle order and dispatch UPDATE_ORDER action', ( done ) => {
             const store = createMockStore( { auth: { uid }} );
-            const action = actions.startToggleTodo( testTodoRef.key, true );
-            console.log( 'In should toggle todo, action is: ', action );
+            const action = actions.startToggleOrder( testOrderRef.key, true );
+            console.log( 'In should toggle order, action is: ', action );
             var promise = store.dispatch( action );
-            console.log( 'In should toggle todo, promise is: ', promise );
+            console.log( 'In should toggle order, promise is: ', promise );
             promise.then( () => {
                 const mockActions = store.getActions();
                 expect( mockActions[0] ).toInclude( {
-                    type: 'UPDATE_TODO',
-                    id: testTodoRef.key,
+                    type: 'UPDATE_ORDER',
+                    id: testOrderRef.key,
                 });
                 expect( mockActions[0].updates ).toInclude( {
                     completed: true
@@ -117,39 +117,23 @@ describe( 'Actions', () => {
             }, done );
         })
         
-        /*
-        it( 'should call startAddTodos action', ( done ) => {
-            const store = createMockStore( {} );
-            const action = actions.startAddTodos();
-            console.log( 'In startAddTodos, action is: ', action );
-            var promise = store.dispatch( action );
-            console.log( 'In should call startAddTodos, promise is: ', promise );
-            promise.then( () => {
-                const mockActions = store.getActions();
-                expect( mockActions[0].type ).toEqual( 'ADD_TODOS' );
-                expect( mockActions[0].todos.length ).toEqual( 1 );
-                expect( mockActions[0].todos[0].text ).toEqual( 'Something to do' );
-                done();
-            }, done );
-        })
-        */
-        it('should populate todos and dispatch ADD_TODOS', (done) => {
+        it('should populate orders and dispatch ADD_ORDERS', (done) => {
             const store = createMockStore( { auth: { uid }} );
-            const action = actions.startAddTodos();
+            const action = actions.startAddOrders();
 
             store.dispatch(action).then(() => {
                 const mockActions = store.getActions();
 
-                expect(mockActions[0].type).toEqual('ADD_TODOS');
-                expect(mockActions[0].todos.length).toEqual(1);
-                expect(mockActions[0].todos[0].text).toEqual('Something to do');
+                expect(mockActions[0].type).toEqual('ADD_ORDERS');
+                expect(mockActions[0].orders.length).toEqual(1);
+                expect(mockActions[0].orders[0].text).toEqual('Something to do');
 
                 done();
             }, done)
         });
 
-        it ( 'should generate add todos action object', () => {
-            var todos = [{
+        it ( 'should generate add orders action object', () => {
+            var orders = [{
                 id: '111',
                 text: 'anything',
                 completed: false,
@@ -157,10 +141,10 @@ describe( 'Actions', () => {
                 createdAt: 33333
             }];
             var action = {
-                type: 'ADD_TODOS',
-                todos
+                type: 'ADD_ORDERS',
+                orders
             }
-            var response = actions.addTodos( todos );
+            var response = actions.addOrders( orders );
             expect( response ).toEqual( action );
         });
 

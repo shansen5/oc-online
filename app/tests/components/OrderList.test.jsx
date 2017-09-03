@@ -6,16 +6,16 @@ var TestUtils = require('react-addons-test-utils');
 var $ = require('jquery');
 
 import { configure } from 'configureStore';
-import ConnectedTodoList, { TodoList } from 'TodoList';
-import ConnectedTodo, { Todo } from 'Todo';
+import ConnectedOrderList, { OrderList } from 'OrderList';
+import ConnectedOrder, { Order } from 'Order';
 
-describe('TodoList', () => {
+describe('OrderList', () => {
     it('should exist', () => {
-        expect(TodoList).toExist();
+        expect(OrderList).toExist();
     });
 
-    it('should render one Todo component for each todo item', () => {
-        var todos = [{
+    it('should render one Order component for each order item', () => {
+        var orders = [{
             id: 1,
             text: 'Do something',
             completed: false,
@@ -30,22 +30,22 @@ describe('TodoList', () => {
             createdAt: 500
         }];
         var store = configure( { 
-            todos
+            orders
         });
         var provider = TestUtils.renderIntoDocument( 
             <Provider store={store}>
-                <ConnectedTodoList/>
+                <ConnectedOrderList/>
             </Provider>
         );
-        var todoList = TestUtils.scryRenderedComponentsWithType( provider, ConnectedTodoList )[0];
-        var todosComponents = TestUtils.scryRenderedComponentsWithType( todoList, ConnectedTodo );
-        expect( todosComponents.length ).toBe( todos.length );
+        var orderList = TestUtils.scryRenderedComponentsWithType( provider, ConnectedOrderList )[0];
+        var ordersComponents = TestUtils.scryRenderedComponentsWithType( orderList, ConnectedOrder );
+        expect( ordersComponents.length ).toBe( orders.length );
     });
 
-    it('should render empty message if no todos', () => {
-        var todos = [];
-        var todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
-        var $el = $( ReactDOM.findDOMNode( todoList ));
+    it('should render empty message if no orders', () => {
+        var orders = [];
+        var orderList = TestUtils.renderIntoDocument(<OrderList orders={orders}/>);
+        var $el = $( ReactDOM.findDOMNode( orderList ));
         expect( $el.find( '.container__message' ).length ).toBe( 1 );
     });
 });

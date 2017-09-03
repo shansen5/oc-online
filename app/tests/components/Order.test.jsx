@@ -5,23 +5,23 @@ var TestUtils = require('react-addons-test-utils');
 var $ = require('jquery');
 
 import * as actions from 'actions';
-import { Todo } from 'Todo';
+import { Order } from 'Order';
 
-describe('Todo', () => {
+describe('Order', () => {
     it('should exist', () => {
-        expect(Todo).toExist();
+        expect(Order).toExist();
     });
 
-    it( 'should dispatch UPDATE_TODO action on click', () => {
-        var todoData = {
+    it( 'should dispatch UPDATE_ORDER action on click', () => {
+        var orderData = {
             id: 11,
             text: 'Test features',
             completed: false
         }
-        var action = actions.startToggleTodo( todoData.id, !todoData.completed );
+        var action = actions.startToggleOrder( orderData.id, !orderData.completed );
         var spy = expect.createSpy();
-        var todo = TestUtils.renderIntoDocument( <Todo {...todoData} dispatch={spy}/> );
-        var $el = $( ReactDOM.findDOMNode( todo ));
+        var order = TestUtils.renderIntoDocument( <Order {...orderData} dispatch={spy}/> );
+        var $el = $( ReactDOM.findDOMNode( order ));
         TestUtils.Simulate.click( $el[0] );
         expect( spy ).toHaveBeenCalledWith( action );
     });

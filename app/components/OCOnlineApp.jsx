@@ -1,9 +1,9 @@
 import React from 'react';
 import * as Redux from 'react-redux';
 
-import TodoList from 'TodoList';
-import AddTodo from 'AddTodo';
-import TodoSearch from 'TodoSearch';
+import OrderList from 'OrderList';
+import AddOrder from 'AddOrder';
+import OrderSearch from 'OrderSearch';
 import * as actions from 'actions';
 
 export class OCOnlineApp extends React.Component {
@@ -22,9 +22,9 @@ export class OCOnlineApp extends React.Component {
                 <div className="row">
                     <div className="column small-centered small-11 medium-6 large-5">
                         <div className="container">
-                            <TodoSearch/>
-                            <TodoList/>
-                            <AddTodo/>
+                            <OrderSearch/>
+                            <OrderList/>
+                            <AddOrder/>
                         </div>
                     </div>
                 </div>

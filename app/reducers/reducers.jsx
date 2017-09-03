@@ -19,27 +19,27 @@ export var showCompletedReducer = ( state = false, action ) => {
     }
 }
 
-export var todoReducer = ( state = [], action ) => {
+export var orderReducer = ( state = [], action ) => {
     switch( action.type ) {
-        case 'ADD_TODO':
+        case 'ADD_ORDER':
             return [
                 ...state,
-                action.todo
+                action.order
             ]
-        case 'ADD_TODOS':
+        case 'ADD_ORDERS':
             return [
                 ...state,
-                ...action.todos
+                ...action.orders
             ]
-        case 'UPDATE_TODO':
-            return state.map( ( todo ) => {
-                if ( todo.id === action.id ) {
+        case 'UPDATE_ORDER':
+            return state.map( ( order ) => {
+                if ( order.id === action.id ) {
                     return {
-                        ...todo,
+                        ...order,
                         ...action.updates
                     }
                 } else {
-                    return todo;
+                    return order;
                 }
             });
         case 'LOGOUT':

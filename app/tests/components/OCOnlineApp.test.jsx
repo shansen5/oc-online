@@ -6,7 +6,7 @@ var TestUtils = require('react-addons-test-utils');
 var $ = require('jquery');
 
 var configureStore = require( 'configureStore' );
-import TodoList from 'TodoList'
+import OrderList from 'OrderList'
 // Use the unconnected version of OCOnlineApp for testing.
 import {OCOnlineApp} from 'OCOnlineApp';
 
@@ -15,7 +15,7 @@ describe('OCOnlineApp', () => {
         expect(OCOnlineApp).toExist();
     });
 
-    it( 'should render TodoList', () => {
+    it( 'should render OrderList', () => {
         var store = configureStore.configure();
         var provider = TestUtils.renderIntoDocument(
             <Provider store={store}>
@@ -24,7 +24,7 @@ describe('OCOnlineApp', () => {
         )
 
         var oconlineApp = TestUtils.scryRenderedComponentsWithType( provider, OCOnlineApp )[0];
-        var todoList = TestUtils.scryRenderedComponentsWithType( oconlineApp, TodoList );
-        expect( todoList.length ).toBe( 1 );
+        var orderList = TestUtils.scryRenderedComponentsWithType( oconlineApp, OrderList );
+        expect( orderList.length ).toBe( 1 );
     })
 });

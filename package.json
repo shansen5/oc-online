@@ -1,7 +1,7 @@
 {
   "name": "oc-online",
   "version": "1.0.0",
-  "description": "Simple react web server.",
+  "description": "Simple react web application.",
   "main": "index.js",
   "scripts": {
     "start": "yarn run build && node server.js",

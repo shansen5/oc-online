@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from 'actions';
 
-export class TodoSearch extends React.Component {
+export class OrderSearch extends React.Component {
     onSearchChange() {
         var searchText = this.refs.searchText.value;
         this.props.dispatch( actions.setSearchText( searchText ));
@@ -15,14 +15,14 @@ export class TodoSearch extends React.Component {
         return (
             <div className="container__header">
                 <div>
-                    <input type="search" ref="searchText" placeholder="Search todos"
+                    <input type="search" ref="searchText" placeholder="Search orders"
                             value={ searchText } onChange={ this.onSearchChange.bind( this ) }/>
                 </div>
                 <div>
                     <label>
                         <input type="checkbox" ref="showCompleted" 
                                 checked={showCompleted} onChange={ this.onCompletedChange.bind( this ) }/>
-                        Show completed todos
+                        Show completed orders
                     </label>
                 </div>
             </div>
@@ -37,4 +37,4 @@ export default connect(
             searchText: state.searchText
         }
     }
-) ( TodoSearch );
+) ( OrderSearch );

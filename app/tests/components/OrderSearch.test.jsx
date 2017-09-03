@@ -4,12 +4,12 @@ var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var $ = require('jquery');
 
-import { TodoSearch }  from 'TodoSearch';
-var Todo = require( 'Todo' );
+import { OrderSearch }  from 'OrderSearch';
+var Order = require( 'Order' );
 
-describe('TodoSearch', () => {
+describe('OrderSearch', () => {
     it('should exist', () => {
-        expect(TodoSearch).toExist();
+        expect(OrderSearch).toExist();
     });
 
     it('should dispatch SET_SEARCH_TEXT on input change', () => {
@@ -19,9 +19,9 @@ describe('TodoSearch', () => {
             searchText
         }
         var spy = expect.createSpy();
-        var todoSearch = TestUtils.renderIntoDocument( <TodoSearch dispatch={spy}/> ); 
-        todoSearch.refs.searchText.value = searchText;
-        TestUtils.Simulate.change( todoSearch.refs.searchText );
+        var orderSearch = TestUtils.renderIntoDocument( <OrderSearch dispatch={spy}/> ); 
+        orderSearch.refs.searchText.value = searchText;
+        TestUtils.Simulate.change( orderSearch.refs.searchText );
         expect( spy ).toHaveBeenCalledWith( action );
     });
 
@@ -30,9 +30,9 @@ describe('TodoSearch', () => {
             type: 'TOGGLE_SHOW_COMPLETED'
         }
         var spy = expect.createSpy();
-        var todoSearch = TestUtils.renderIntoDocument( <TodoSearch dispatch={spy}/> ); 
-        todoSearch.refs.showCompleted.checked = true;
-        TestUtils.Simulate.change( todoSearch.refs.showCompleted );
+        var orderSearch = TestUtils.renderIntoDocument( <OrderSearch dispatch={spy}/> ); 
+        orderSearch.refs.showCompleted.checked = true;
+        TestUtils.Simulate.change( orderSearch.refs.showCompleted );
         expect( spy ).toHaveBeenCalledWith( action );
     });
 });

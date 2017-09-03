@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from 'actions';
 
-export class AddTodo extends React.Component {
+export class AddOrder extends React.Component {
     onFormSubmit( e ) {
         e.preventDefault();
         var { dispatch } = this.props;
@@ -10,13 +10,13 @@ export class AddTodo extends React.Component {
         var recipientName = this.refs.recipientName.value;
         if ( recipientName && recipientName.trim().length > 0 ) {
             this.refs.recipientName.value = '';
-            dispatch( actions.startAddTodo( recipientName ));
+            dispatch( actions.startAddOrder( recipientName ));
         } else {
             this.refs.recipientName.focus();
         }
         if ( giftAmount && giftAmount.trim().length > 0 ) {
             this.refs.giftAmount.value = '';
-            dispatch( actions.startAddTodo( giftAmount ));
+            dispatch( actions.startAddOrder( giftAmount ));
         } else {
             this.refs.giftAmount.focus();
         }
@@ -24,7 +24,7 @@ export class AddTodo extends React.Component {
     render() {
         return( 
             <div className="container__footer">
-                <form ref="form" onSubmit={ this.onFormSubmit.bind( this ) } className="addtodo">
+                <form ref="form" onSubmit={ this.onFormSubmit.bind( this ) } className="addorder">
                     <div>
                         <input type="text" placeholder="Enter the amount of the gift certificate" ref="giftAmount"/>
                         <input type="text" placeholder="Recipient's name" ref="recipientName"/>
@@ -38,4 +38,4 @@ export class AddTodo extends React.Component {
     }
 }
 
-export default connect() ( AddTodo );
+export default connect() ( AddOrder );
